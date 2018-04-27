@@ -7,7 +7,6 @@ import { TelemetryClient } from './telemetryClient';
 import * as yamljs from 'yamljs';
 var fs = require('fs');
 
-var request = require('request');
 
 const GithubApiUri = 'https://' + Constants.GitHubApiHost;
 const GithubRawContentUri = 'https://' + Constants.GitHubRawContentHost;
