@@ -7,6 +7,7 @@ export class Constants {
     public static UserAgentName = 'VSCODEEXT_USER_AGENT';
     public static Config_cloudShellConfirmed = 'cloudShellConfirmed';
     public static Config_credentialConfigured = 'credentialsConfigured';
+    public static Config_useCredentials = 'useCredentials';
     public static Config_credentialsFile = 'credentialsFile';
     public static Config_terminalInitCommand = 'terminalInitCommand';
     public static GitHubApiHost = 'api.github.com';

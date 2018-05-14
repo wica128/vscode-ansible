@@ -138,6 +138,10 @@
           "type": "boolean",
           "default": false
         },
+        "ansible.useCredentials": {
+          "type": "boolean",
+          "default": true
+        },        
         "ansible.cloudShellConfirmed": {
           "type": "boolean",
           "default": false

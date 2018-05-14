@@ -69,7 +69,14 @@ export class DockerRunner extends TerminalBaseRunner {
             if (err) {
                 return;
             }
-
+            
+            var useCredentials = utilities.getCodeConfiguration<string>(null, Constants.Config_useCredentials);
+            vscode.window.showInformationMessage(useCredentials.toString());
+            if (!useCredentials){
+                this.startTerminal(terminalId, initCmd, Constants.AnsibleTerminalName + ' ' + Option.docker, true, subCmds, 180, false);
+                return;
+            }
+            
             const msgOption: vscode.MessageOptions = { modal: false };
             const msgItem: vscode.MessageItem = { title: 'Ok' };
 
