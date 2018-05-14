@@ -4,12 +4,14 @@ export class Constants {
     public static AzureAccountExtensionId = 'ms-vscode.azure-account';
     public static DockerImageName = 'microsoft/ansible:ubuntu1604';
     public static AnsibleTerminalName = 'Ansible';
+    public static AnsiblePlaybook = 'Playbook';
     public static UserAgentName = 'VSCODEEXT_USER_AGENT';
     public static Config_cloudShellConfirmed = 'cloudShellConfirmed';
     public static Config_credentialConfigured = 'credentialsConfigured';
     public static Config_useCredentials = 'useCredentials';
     public static Config_credentialsFile = 'credentialsFile';
     public static Config_terminalInitCommand = 'terminalInitCommand';
+    public static Config_usePlaybook = 'usePlaybook';
     public static GitHubApiHost = 'api.github.com';
     public static GitHubRawContentHost = 'raw.githubusercontent.com';
     public static AzureQuickStartTemplates = 'Azure/azure-quickstart-templates';
