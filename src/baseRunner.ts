@@ -5,6 +5,7 @@ import { Constants } from "./constants";
 import * as utilties from "./utilities";
 import * as path from "path";
 import { OutputChannel } from "vscode";
+import * as utilities from './utilities';
 
 export enum Option {
     docker = "Docker",
@@ -32,7 +33,17 @@ export abstract class BaseRunner {
     }
 
     public runPlaybook(playbook: string): void {
-
+        
+        if ( playbook === undefined ){
+            var usePlaybook = utilities.getCodeConfiguration<string>(null, Constants.Config_usePlaybook);
+            if ( usePlaybook !== '' ){
+                if (path.basename(usePlaybook) === usePlaybook ){
+                    playbook = vscode.workspace.workspaceFolders[0].uri.fsPath + '/' + usePlaybook
+                }else{
+                    playbook = usePlaybook
+                }
+            }
+        }
         if (!playbook) {
             playbook = vscode.window.activeTextEditor ? vscode.window.activeTextEditor.document.fileName : null;
             vscode.window.showInputBox({ value: playbook, prompt: 'Please input playbook name', placeHolder: 'playbook', password: false })

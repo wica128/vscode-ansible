@@ -17,11 +17,25 @@ export class DockerRunner extends TerminalBaseRunner {
     }
 
     protected getCmds(playbook: string, envs: string[], terminalId: string): string[] {
+        
         var cmdsToTerminal = [];
         let cmd: string = utilities.getCodeConfiguration<string>(null, Constants.Config_terminalInitCommand);
 
+        var usePlaybook = utilities.getCodeConfiguration<string>(null, Constants.Config_usePlaybook);
+        
+        vscode.window.showInformationMessage(vscode.workspace.workspaceFolders[0].uri.fsPath);
+
+        if ( usePlaybook !== ''){
+            if (path.basename(playbook) === usePlaybook ){
+                playbook = vscode.workspace.workspaceFolders[0].uri.fsPath + '/' + usePlaybook
+            }else{
+                playbook = usePlaybook
+            }
+        }
+
         var sourcePath = path.dirname(playbook);
-        var targetPath = '/playbook';
+        //var targetPath = '/playbook';
+        var targetPath = '';
         var targetPlaybook = targetPath + '/' + path.basename(playbook);
         if (vscode.workspace.workspaceFolders) {
             sourcePath = vscode.workspace.workspaceFolders[0].uri.fsPath;
@@ -29,6 +43,7 @@ export class DockerRunner extends TerminalBaseRunner {
             targetPlaybook = path.relative(sourcePath, playbook);
             targetPlaybook = targetPlaybook.replace(/\\/g, '/');
         }
+
 
         if (cmd === "default" || cmd === '') {
             cmd = "docker run --rm -it -v \"$workspace:$targetFolder\"  --workdir \"$targetFolder\" --name $containerId";
