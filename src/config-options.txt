@@ -1,0 +1,4 @@
+"ansible.terminalInitCommand": "find /tmp",
+"ansible.useCredentials": false,
+"ansible.usePlaybook": "/Users/user/test-docker-playbook.yml"
+"ansible.usePlaybook": "docker-playbook.yml"

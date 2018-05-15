@@ -22,8 +22,8 @@ export class DockerRunner extends TerminalBaseRunner {
         let cmd: string = utilities.getCodeConfiguration<string>(null, Constants.Config_terminalInitCommand);
 
         var usePlaybook = utilities.getCodeConfiguration<string>(null, Constants.Config_usePlaybook);
-        
-        vscode.window.showInformationMessage(vscode.workspace.workspaceFolders[0].uri.fsPath);
+        var playbookOptions = utilities.getCodeConfiguration<string>(null, Constants.Config_playbookOptions);
+        var dockterNetwork = utilities.getCodeConfiguration<string>(null, Constants.Config_dockterNetwork);
 
         if ( usePlaybook !== ''){
             if (path.basename(playbook) === usePlaybook ){
@@ -46,7 +46,7 @@ export class DockerRunner extends TerminalBaseRunner {
 
 
         if (cmd === "default" || cmd === '') {
-            cmd = "docker run --rm -it -v \"$workspace:$targetFolder\"  --workdir \"$targetFolder\" --name $containerId";
+            cmd = "docker run --rm "+dockterNetwork+" -it -v \"$workspace:$targetFolder\"  --workdir \"$targetFolder\" --name $containerId";
             cmd = cmd.replace('$workspace', sourcePath);
             cmd = cmd.replace(new RegExp('\\$targetFolder', 'g'), targetPath);
             cmd = cmd.replace('$containerId', terminalId);
@@ -66,7 +66,7 @@ export class DockerRunner extends TerminalBaseRunner {
 
             cmd += ' ' + Constants.DockerImageName + ' bash';
             cmdsToTerminal.push(cmd);
-            cmdsToTerminal.push('ansible-playbook ' + targetPlaybook);
+            cmdsToTerminal.push('ansible-playbook ' + targetPlaybook+' '+playbookOptions);
         } else {
             cmdsToTerminal.push(cmd);
         }

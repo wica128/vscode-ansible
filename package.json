@@ -139,7 +139,16 @@
           "default": "",
           "description": "Define which playbook to run default which ^R, and run it"
         },
-        
+        "ansible.playbookOptions": {
+          "type": "string",
+          "default": "",
+          "description": "Option to pass thru to ansible-playbook"
+        },
+        "ansible.dockterNetwork": {
+          "type": "string",
+          "default": "",
+          "description": "Network options for docker"
+        },
         "ansible.credentialsConfigured": {
           "type": "boolean",
           "default": false

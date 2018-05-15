@@ -12,6 +12,8 @@ export class Constants {
     public static Config_credentialsFile = 'credentialsFile';
     public static Config_terminalInitCommand = 'terminalInitCommand';
     public static Config_usePlaybook = 'usePlaybook';
+    public static Config_playbookOptions = 'playbookOptions';
+    public static Config_dockterNetwork = 'dockterNetwork';
     public static GitHubApiHost = 'api.github.com';
     public static GitHubRawContentHost = 'raw.githubusercontent.com';
     public static AzureQuickStartTemplates = 'Azure/azure-quickstart-templates';
