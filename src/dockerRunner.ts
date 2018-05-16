@@ -20,7 +20,7 @@ export class DockerRunner extends TerminalBaseRunner {
     }
 
     protected getCmds(playbook: string, envs: string[], terminalId: string): string[] {
-        
+        console.log("Playbook: "+playbook)
         var cmdsToTerminal = [];
         let cmd: string = utilities.getCodeConfiguration<string>(null, Constants.Config_terminalInitCommand);
 
@@ -29,9 +29,9 @@ export class DockerRunner extends TerminalBaseRunner {
         let dockterOptions = utilities.getCodeConfiguration<string>(null, Constants.Config_dockterOptions);
 
         // Find playbook
-        if (existsSync(usePlaybook)){
+        if (existsSync(usePlaybook) && playbook === undefined ){
             playbook = usePlaybook
-        }else if (existsSync(vscode.workspace.workspaceFolders[0].uri.fsPath+"/"+usePlaybook)){
+        }else if (existsSync(vscode.workspace.workspaceFolders[0].uri.fsPath+"/"+usePlaybook) && playbook === undefined ){
             playbook = vscode.workspace.workspaceFolders[0].uri.fsPath+"/"+usePlaybook
         }
         //console.log(playbook)
