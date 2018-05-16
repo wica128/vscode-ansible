@@ -24,22 +24,24 @@ export class DockerRunner extends TerminalBaseRunner {
         var cmdsToTerminal = [];
         let cmd: string = utilities.getCodeConfiguration<string>(null, Constants.Config_terminalInitCommand);
 
-        let usePlaybook = utilities.getCodeConfiguration<string>(null, Constants.Config_usePlaybook);
         let playbookOptions = utilities.getCodeConfiguration<string>(null, Constants.Config_playbookOptions);
         let dockterOptions = utilities.getCodeConfiguration<string>(null, Constants.Config_dockterOptions);
 
         // Find playbook
-        if (existsSync(usePlaybook) && playbook === undefined ){
-            playbook = usePlaybook
-        }else if (existsSync(vscode.workspace.workspaceFolders[0].uri.fsPath+"/"+usePlaybook) && playbook === undefined ){
-            playbook = vscode.workspace.workspaceFolders[0].uri.fsPath+"/"+usePlaybook
+        if(!playbook){
+            let usePlaybook = utilities.getCodeConfiguration<string>(null, Constants.Config_usePlaybook);
+            if (usePlaybook !== '' ){
+                if (existsSync(usePlaybook)){
+                    playbook = usePlaybook
+                }else if (existsSync(vscode.workspace.workspaceFolders[0].uri.fsPath+"/"+usePlaybook)){
+                    playbook = vscode.workspace.workspaceFolders[0].uri.fsPath+"/"+usePlaybook
+                }
+            }
         }
-        //console.log(playbook)
         
         vscode.workspace.workspaceFolders[0].uri.fsPath
         var sourcePath = path.dirname(playbook);
         var targetPath = '/playbook';
-        //var targetPath = '';
         var targetPlaybook = targetPath + '/' + path.basename(playbook);
         if (vscode.workspace.workspaceFolders) {
             sourcePath = vscode.workspace.workspaceFolders[0].uri.fsPath;
