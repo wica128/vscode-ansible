@@ -34,7 +34,7 @@ export class DockerRunner extends TerminalBaseRunner {
         }else if (existsSync(vscode.workspace.workspaceFolders[0].uri.fsPath+"/"+usePlaybook)){
             playbook = vscode.workspace.workspaceFolders[0].uri.fsPath+"/"+usePlaybook
         }
-
+        //console.log(playbook)
         
         vscode.workspace.workspaceFolders[0].uri.fsPath
         var sourcePath = path.dirname(playbook);

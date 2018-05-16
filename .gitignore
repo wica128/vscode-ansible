@@ -66,3 +66,7 @@ typings/
 .env
 vscode-ansible-0.2.6.vsix
 wica-vscode-ansible-0.2.6.vsix
+.local_install.sh.swp
+
+# vim swap
+.sw*
