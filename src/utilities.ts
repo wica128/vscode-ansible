@@ -19,7 +19,7 @@ const sshConfigFile = path.join(os.homedir(), '.ssh', 'servers.json');
 export function localExecCmd(cmd: string, args: string[], outputChannel: vscode.OutputChannel, cb: Function): void {
     try {
         var cp = require('child_process').spawn(cmd, args);
-
+        
         cp.stdout.on('data', function (data) {
             if (outputChannel) {
                 outputChannel.appendLine('\n' + String(data));

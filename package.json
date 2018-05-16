@@ -144,7 +144,7 @@
           "default": "",
           "description": "Option to pass thru to ansible-playbook"
         },
-        "ansible.dockterNetwork": {
+        "ansible.dockterOptions": {
           "type": "string",
           "default": "",
           "description": "Network options for docker"

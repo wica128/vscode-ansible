@@ -9,6 +9,9 @@ import { TerminalExecutor } from './terminalExecutor';
 import { TelemetryClient } from './telemetryClient';
 import { clearInterval } from 'timers';
 import { TerminalBaseRunner } from './terminalBaseRunner';
+import { FileUtilities } from 'azure-storage';
+import { ENFILE } from 'constants';
+import { fstat, existsSync } from 'fs';
 
 
 export class DockerRunner extends TerminalBaseRunner {
@@ -21,21 +24,22 @@ export class DockerRunner extends TerminalBaseRunner {
         var cmdsToTerminal = [];
         let cmd: string = utilities.getCodeConfiguration<string>(null, Constants.Config_terminalInitCommand);
 
-        var usePlaybook = utilities.getCodeConfiguration<string>(null, Constants.Config_usePlaybook);
-        var playbookOptions = utilities.getCodeConfiguration<string>(null, Constants.Config_playbookOptions);
-        var dockterNetwork = utilities.getCodeConfiguration<string>(null, Constants.Config_dockterNetwork);
+        let usePlaybook = utilities.getCodeConfiguration<string>(null, Constants.Config_usePlaybook);
+        let playbookOptions = utilities.getCodeConfiguration<string>(null, Constants.Config_playbookOptions);
+        let dockterOptions = utilities.getCodeConfiguration<string>(null, Constants.Config_dockterOptions);
 
-        if ( usePlaybook !== ''){
-            if (path.basename(playbook) === usePlaybook ){
-                playbook = vscode.workspace.workspaceFolders[0].uri.fsPath + '/' + usePlaybook
-            }else{
-                playbook = usePlaybook
-            }
+        // Find playbook
+        if (existsSync(usePlaybook)){
+            playbook = usePlaybook
+        }else if (existsSync(vscode.workspace.workspaceFolders[0].uri.fsPath+"/"+usePlaybook)){
+            playbook = vscode.workspace.workspaceFolders[0].uri.fsPath+"/"+usePlaybook
         }
 
+        
+        vscode.workspace.workspaceFolders[0].uri.fsPath
         var sourcePath = path.dirname(playbook);
-        //var targetPath = '/playbook';
-        var targetPath = '';
+        var targetPath = '/playbook';
+        //var targetPath = '';
         var targetPlaybook = targetPath + '/' + path.basename(playbook);
         if (vscode.workspace.workspaceFolders) {
             sourcePath = vscode.workspace.workspaceFolders[0].uri.fsPath;
@@ -46,7 +50,7 @@ export class DockerRunner extends TerminalBaseRunner {
 
 
         if (cmd === "default" || cmd === '') {
-            cmd = "docker run --rm "+dockterNetwork+" -it -v \"$workspace:$targetFolder\"  --workdir \"$targetFolder\" --name $containerId";
+            cmd = "docker run --rm -it -v \"$workspace:$targetFolder\"  --workdir \"$targetFolder\" --name $containerId "+dockterOptions;
             cmd = cmd.replace('$workspace', sourcePath);
             cmd = cmd.replace(new RegExp('\\$targetFolder', 'g'), targetPath);
             cmd = cmd.replace('$containerId', terminalId);

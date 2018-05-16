@@ -1,6 +1,6 @@
 # vscode
 .vscode-test/
-.vsix
+*.vsix
 out
 nodemodules
 **/.vscode
@@ -64,3 +64,5 @@ typings/
 
 # dotenv environment variables file
 .env
+vscode-ansible-0.2.6.vsix
+wica-vscode-ansible-0.2.6.vsix
