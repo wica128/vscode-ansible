@@ -17,7 +17,8 @@ export abstract class TerminalBaseRunner extends BaseRunner {
     protected runPlaybookInternal(playbook: string): void {
         // - parse credential files if exists
         const credentials = utilities.parseCredentialsFile(this._outputChannel);
-        var terminalId = 'ansible' + Date.now();
+        //var terminalId = 'ansible' + Date.now();
+        var terminalId = 'ansible-'+vscode.workspace.name;
 
         var cmds = this.getCmds(playbook, credentials, terminalId);
         this.runAnsibleInTerminal(playbook, cmds, terminalId);

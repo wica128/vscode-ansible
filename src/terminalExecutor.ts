@@ -11,6 +11,7 @@ var terminalCount: { [id: string]: number } = {};
 export class TerminalExecutor {
     private static terminals: { [id: string]: vscode.Terminal } = {};
 
+
     public static onDidCloseTerminal(closedTerminal: vscode.Terminal): void {
         if (terminalCount[closedTerminal.name]) {
             terminalCount[closedTerminal.name] = terminalCount[closedTerminal.name]--;
@@ -26,7 +27,6 @@ export class TerminalExecutor {
             })
         }
     }
-
     public static runInTerminal(initCommand: string,
         terminalName: string,
         waitAfterInitCmd: boolean,
@@ -34,6 +34,7 @@ export class TerminalExecutor {
         retryTime: number,
         reuseTerminal: boolean,
         cb: Function): void {
+
         if (!reuseTerminal || (this.terminals === undefined || this.terminals[terminalName] === undefined)) {
             if (!terminalCount[terminalName]) {
                 terminalCount[terminalName] = 0;
@@ -47,9 +48,17 @@ export class TerminalExecutor {
             this.terminals[terminalName] = newterminal;
             terminalCount[terminalName]++;
         }
+        
+        // find running docker
+        var child_process = require('child_process');
+        var output = child_process.execSync('docker ps  -q --filter name=ansible-'+vscode.workspace.name).toString();
 
         let terminal = this.terminals[terminalName];
-        terminal.sendText(initCommand);
+        if(output){
+            terminal.sendText('docker attach '+output);
+        }else{
+            terminal.sendText(initCommand);
+        }
         terminal.show();
 
         if (waitAfterInitCmd) {
