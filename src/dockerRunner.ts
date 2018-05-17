@@ -20,7 +20,7 @@ export class DockerRunner extends TerminalBaseRunner {
     }
 
     protected getCmds(playbook: string, envs: string[], terminalId: string): string[] {
-        console.log("Playbook: "+playbook)
+        
         var cmdsToTerminal = [];
         let cmd: string = utilities.getCodeConfiguration<string>(null, Constants.Config_terminalInitCommand);
 
